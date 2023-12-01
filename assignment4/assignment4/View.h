@@ -6,30 +6,35 @@
 #include <vector>
 #include "Podcast.h"
 #include "PodcastPlayer.h"
+#include "AudioPlayer.h"
+#include "VideoPlayer.h"
+#include "Array.h"
 
 using namespace std;
 
-class View {
-		
-	public:
-		//constructors
-		View();
-		void menu(vector<string>&, int& choice);
-		void printAllPodcasts(const Array<Podcast*>& podcasts);
-		void podcastMenu( const Array<Podcast*>& podcasts, int& choice);
-		void printPodcast(const Podcast*);
-		// void episodeMenu(Podcast&, int& choice);
-        void promptHost(string& host);
-		void promptCategory(string& category);
-		void printPlaylist(Array<Episode*>&);
-		void playPlaylist(Array<Episode*>&);
+class View
+{
 
-		void promptVideo();
-		void toggleVideo(bool);
+public:
+	// constructors
+	View();
+	void menu(vector<string> &, int &choice);
+	void printAllPodcasts(const Array<Podcast *> &podcasts);
+	void podcastMenu(const Array<Podcast *> &podcasts, int &choice);
+	void printPodcast(const Podcast *);
+	// void episodeMenu(Podcast&, int& choice);
+	void promptHost(string &host);
+	void promptCategory(string &category);
+	void printPlaylist(Array<Episode *> &);
+	void playPlaylist(Array<Episode *> &);
 
+	void promptVideo();
+	void toggleVideo(bool);
 
-	private:
-		PodcastPlayer* player;	
-		
+private:
+	PodcastPlayer *player;
+
+	AudioPlayer audioPlayer;
+	VideoPlayer videoPlayer;
 };
 #endif
