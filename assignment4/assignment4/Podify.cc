@@ -12,7 +12,7 @@ Podify::~Podify() {
 
 void Podify::addPodcast(Podcast* podcast) {
     if (podcast) {
-        podcasts += podcast;  // Assuming your Array class has an overloaded += operator
+        podcasts.add(podcast);  // Use the add method instead of operator+=
     }
 }
 
@@ -51,7 +51,7 @@ void Podify::getEpisodes(const Search& searchCriteria, Array<Episode*>& outEpiso
         for (int j = 0; j < podcast->getSize(); ++j) {
             Episode* episode = podcast->get(j);
             if (searchCriteria.matches(episode)) {
-                outEpisodes += episode; // Assuming the Array class has an overloaded += operator
+                outEpisodes.add(episode);  // Use the add method instead of operator+=
             }
         }
     }

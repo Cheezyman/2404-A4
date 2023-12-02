@@ -31,11 +31,6 @@ void View::menu(vector<string> &menu, int &choice)
   }
 }
 
-View::View() : player(&audioPlayer)
-{
-  // Constructor implementation
-}
-
 void View::toggleVideo(bool video)
 {
   if (video)
@@ -148,8 +143,4 @@ void View::promptVideo()
   }
 
   toggleVideo(choice == 2);
-}
-
-void View::toggleVideo(bool video)
-{
 }
