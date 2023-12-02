@@ -1,54 +1,58 @@
 #include "Podify.h"
-#include <iostream>
 
-void Podify::addPodcast(Podcast *podcast)
-{
-    podcasts.push_back(podcast);
+Podify::Podify() {
+    // Constructor implementation if needed
 }
 
-void Podify::addEpisode(Episode *episode, const std::string &podcastTitle)
-{
-    for (auto &podcast : podcasts)
-    {
-        if (podcast->equals(podcastTitle))
-        {
-            podcast->add(episode);
-            return;
+Podify::~Podify() {
+    for (int i = 0; i < podcasts.getSize(); ++i) {
+        delete podcasts[i];  // Ensure your Array class supports this operation
+    }
+}
+
+void Podify::addPodcast(Podcast* podcast) {
+    if (podcast) {
+        podcasts += podcast;  // Assuming your Array class has an overloaded += operator
+    }
+}
+
+void Podify::addEpisode(Episode* episode, const std::string& podcastTitle) {
+    for (int i = 0; i < podcasts.getSize(); ++i) {
+        if (podcasts[i]->equals(podcastTitle)) {
+            podcasts[i]->add(episode);
+            break;
         }
     }
-    std::cerr << "Error: Podcast with title '" << podcastTitle << "' not found." << std::endl;
 }
 
-const std::vector<Podcast *> &Podify::getPodcasts() const
-{
+const Array<Podcast*>& Podify::getPodcasts() const {
     return podcasts;
 }
 
-Podcast *Podify::getPodcast(int index) const
-{
-    if (index < 0 || index >= podcasts.size())
-    {
-        std::cerr << "Error: Index out of bounds." << std::endl;
-        exit(1);
+Podcast* Podify::getPodcast(int index) const {
+    if (index >= 0 && index < podcasts.getSize()) {
+        return podcasts[index];
     }
-    return podcasts[index];
+    return nullptr; // or throw an exception
 }
 
-Podcast *Podify::getPodcast(const std::string &title) const
-{
-    for (auto &podcast : podcasts)
-    {
-        if (podcast->equals(title))
-        {
-            return podcast;
+Podcast* Podify::getPodcast(const std::string& title) const {
+    for (int i = 0; i < podcasts.getSize(); ++i) {
+        if (podcasts[i]->equals(title)) {
+            return podcasts[i];
         }
     }
-    std::cerr << "Error: Podcast with title '" << title << "' not found." << std::endl;
-    exit(1);
+    return nullptr; // or throw an exception
 }
 
-void Podify::getEpisodes(const Search &search, std::vector<Episode *> &outEpisodes) const
-{
-    // Implementation depends on the Search class structure
-    // Iterate through all podcasts and episodes, and add matching episodes to outEpisodes
+void Podify::getEpisodes(const Search& searchCriteria, Array<Episode*>& outEpisodes) {
+    for (int i = 0; i < podcasts.getSize(); ++i) {
+        Podcast* podcast = podcasts[i];
+        for (int j = 0; j < podcast->getSize(); ++j) {
+            Episode* episode = podcast->get(j);
+            if (searchCriteria.matches(episode)) {
+                outEpisodes += episode; // Assuming the Array class has an overloaded += operator
+            }
+        }
+    }
 }
