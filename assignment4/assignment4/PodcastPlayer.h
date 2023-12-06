@@ -11,7 +11,7 @@ public:
     virtual void play(const Episode &episode, std::ostream &ost) const = 0;
 
     // Virtual destructor for proper cleanup of derived classes
-    virtual ~PodcastPlayer() {}
+    virtual ~PodcastPlayer();
 };
 
 #endif // PODCASTPLAYER_H
