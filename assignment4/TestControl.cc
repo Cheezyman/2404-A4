@@ -5,6 +5,13 @@
 #include <algorithm>
 #include "Search.h"
 
+/*
+* This is the version of TestControl that runs on the server. The differences are as follows:
+* a) the menu does not cycle - it chooses one test then exits immediately after
+* b) there were some errors that were not being recorded. That is fixed. Note, for example, line 246 and line 253
+* c) after all the tests have been run, they are run again with valgrind. You can lose up to 3 marks for memory leaks.
+*/
+
 using namespace std;
 
 void TestControl::launch(){
@@ -22,19 +29,18 @@ void TestControl::launch(){
 
     int choice = -1;
 
-    while (choice!= 0){
-        view.menu(menu, choice);
-        tester.clearInputBuffer();
-        switch(choice){
-            case 1: tester.recordMark(1, testAddPodcasts()); break;
-            case 2: tester.recordMark(2, testAddEpisodes()); break;
-            case 3: tester.recordMark(3, testGetEpisodesByHost()); break;
-            case 4: tester.recordMark(4, testGetEpisodesByCategory()); break;
-            case 5: tester.recordMark(5, testGetEpisodesByHostAndCategory()); break;
-            // case 6: testPrintCurrentEpisodeList(); break;
-            case 6: tester.recordMark(6, testPlayCurrentEpisodeList()); break;
-            case 7: tester.recordMark(7, testAllAndMark(), 22); break;
-        }
+    
+    view.menu(menu, choice);
+    // tester.clearInputBuffer();
+    switch(choice){
+        case 1: tester.recordMark(1, testAddPodcasts()); break;
+        case 2: tester.recordMark(2, testAddEpisodes()); break;
+        case 3: tester.recordMark(3, testGetEpisodesByHost()); break;
+        case 4: tester.recordMark(4, testGetEpisodesByCategory()); break;
+        case 5: tester.recordMark(5, testGetEpisodesByHostAndCategory()); break;
+        case 6: tester.recordMark(6, testPlayCurrentEpisodeList()); break;
+        case 7: tester.recordMark(7, testAllAndMark(), 22); break;
+    
     }
     std::cout<<"exiting program!!!"<<endl;
 }
@@ -125,6 +131,7 @@ int TestControl::testAddPodcasts(){
     }else{
         cout<<"All podcast titles found"<<endl;
     }
+    int mark = 2 - error;
     tester.find(hosts, error);
     if (error>0){
         cout<<"Error: "<<error<<" hosts not found"<<endl;
@@ -132,7 +139,7 @@ int TestControl::testAddPodcasts(){
         cout<<"All hosts found"<<endl;
     }
 
-    int mark = 2 - error;
+    mark = mark - error;
     if (mark < 0)mark = 0;
 
     mark += 1; // Your code didn't crash - congrats!
@@ -210,13 +217,14 @@ int TestControl::testGetEpisodesByHost(){
         Search* search = pf.hostSearch(hosts[host]);
         Array<Episode*> episodes;
         podify.getEpisodes(*search, episodes);
+        delete search;
 
         cout<<"Printing episodes by host "<<hosts[host]<<endl;
         tester.initCapture();
         view.playPlaylist(episodes);
         tester.endCapture();
 
-        int errors = 0;
+        int error = 0;
         vector<string> titles;
         titles.push_back(hosts[host]);
         // this should gather all the episode titles with this host
@@ -229,19 +237,20 @@ int TestControl::testGetEpisodesByHost(){
                 break;
             }
         }
-        tester.find(titles, errors);
-        if (errors>0){
-            cout<<"Error: "<<errors<<" episodes not found"<<endl;
+        tester.find(titles, error);
+        if (error>0){
+            cout<<"Error: "<<error<<" episodes not found"<<endl;
         }else{
             cout<<"All episodes found for "<<hosts[host]<<endl;
         }
-
-        tester.confirmAbsent(absentHosts, errors);
-        if (errors>0){
-            cout<<"Error: "<<errors<<" episodes found for absent hosts"<<endl;
+        errors += error;
+        tester.confirmAbsent(absentHosts, error);
+        if (error>0){
+            cout<<"Error: "<<error<<" episodes found for absent hosts"<<endl;
         }else{
             cout<<"No episodes found for absent hosts"<<endl;
         }
+        errors += error;
     }
 
     int mark = 4 - errors;
@@ -274,6 +283,7 @@ int TestControl::testGetEpisodesByCategory(){
         Search* search = pf.categorySearch(categories[cat]);
         Array<Episode*> episodes;
         podify.getEpisodes(*search, episodes);
+        delete search;
 
         cout<<"Printing episodes by category "<<categories[cat]<<endl;
         view.playPlaylist(episodes);
@@ -329,7 +339,7 @@ int TestControl::testGetEpisodesByHostAndCategory(){
     Search* search = pf.hostCatSearch(hosts[host],categories[cat]);
     Array<Episode*> episodes;
     podify.getEpisodes(*search, episodes);
-
+    delete search;
     cout<<"Printing episodes by host "<<hosts[host]<<" or category "<<categories[cat]<<endl;
     view.playPlaylist(episodes);
 
@@ -376,6 +386,7 @@ int TestControl::testPlayCurrentEpisodeList(){
     Search* search = pf.hostSearch(host);
     Array<Episode*> episodes;
     podify.getEpisodes(*search, episodes);
+    delete search;
     for (int i = 0; i < episodes.getSize(); ++i){
         cout<<episodes[i]->getVideoFile()<<endl;
     }
