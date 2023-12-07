@@ -7,11 +7,11 @@
 class PodcastPlayer
 {
 public:
-    // Pure virtual function
-    virtual void play(const Episode &episode, std::ostream &ost) const = 0;
+    // Pure virtual function to play an episode
+    virtual void play(const Episode &episode, std::ostream &os) = 0;
 
-    // Virtual destructor for proper cleanup of derived classes
-    virtual ~PodcastPlayer();
+    // Virtual destructor for safe polymorphic use
+    virtual ~PodcastPlayer() {}
 };
 
 #endif // PODCASTPLAYER_H
