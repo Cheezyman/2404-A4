@@ -4,13 +4,13 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include "Episode.h" // Include the Episode header
-#include "Array.h" 
+#include "Episode.h"
+#include "Array.h"
 
 class Podcast
 {
 private:
-    Array<Episode*> episodes;
+    Array<Episode *> episodes;
     std::string title;
     std::string host;
 

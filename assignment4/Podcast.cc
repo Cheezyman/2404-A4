@@ -7,9 +7,9 @@ Podcast::Podcast(const std::string &title, const std::string &host)
 
 Podcast::~Podcast()
 {
-   for(int i = 0; i < episodes.getSize(); i++)
+    for (int i = 0; i < episodes.getSize(); i++)
     {
-         delete episodes[i];
+        delete episodes[i];
     }
 }
 
@@ -41,7 +41,7 @@ void Podcast::print(std::ostream &out) const
 void Podcast::printWithEpisodes(std::ostream &out) const
 {
     print(out);
-    for(int i = 0; i < episodes.getSize(); i++)
+    for (int i = 0; i < episodes.getSize(); i++)
     {
         out << episodes[i]->getEpisodeTitle() << std::endl;
     }
@@ -49,7 +49,7 @@ void Podcast::printWithEpisodes(std::ostream &out) const
 
 void Podcast::add(Episode *episode)
 {
-    if(episodes.isFull())
+    if (episodes.isFull())
     {
         std::cerr << "Podcast is full" << std::endl;
         return;

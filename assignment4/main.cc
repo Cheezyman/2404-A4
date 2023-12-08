@@ -5,12 +5,10 @@
 #include "View.h"
 #include <vector>
 
-
 using namespace std;
 
-
-
-int main(){
+int main()
+{
     Controller control;
     control.launch();
     return 0;

@@ -6,40 +6,41 @@ Overview
 This application is designed to manage and play podcasts, offering functionality to store, search, and play episodes with both audio and video capabilities. It consists of a range of classes, including base and derived classes, each serving a specific role in the application.
 
 Components
+
 1. Podcast
-Description: Represents a podcast, containing metadata and a collection of episodes.
-Functionality: Stores and manages individual podcast episodes.
+   Description: Represents a podcast, containing metadata and a collection of episodes.
+   Functionality: Stores and manages individual podcast episodes.
 2. Episode
-Description: Represents a single episode of a podcast.
-Functionality: Contains episode-specific metadata and content.
+   Description: Represents a single episode of a podcast.
+   Functionality: Contains episode-specific metadata and content.
 3. Search (Base Class)
-Functionality: Provides a base for search-related operations.
-H_Search: Matches episodes by the podcast host.
-C_Search: Matches episodes by the podcast category.
-HorC_Search: Matches episodes by either the podcast host or category.
+   Functionality: Provides a base for search-related operations.
+   H_Search: Matches episodes by the podcast host.
+   C_Search: Matches episodes by the podcast category.
+   HorC_Search: Matches episodes by either the podcast host or category.
 4. Array
-Description: A simple templated data structure.
-Functionality: Used for storing collections of objects.
+   Description: A simple templated data structure.
+   Functionality: Used for storing collections of objects.
 5. Podify
-Description: Central control object of the application.
-Functionality: Manages the storage and querying of podcasts and their episodes.
+   Description: Central control object of the application.
+   Functionality: Manages the storage and querying of podcasts and their episodes.
 6. PodcastPlayer (Base Class)
-Functionality: Defines how episodes are played.
-AudioPlayer: Plays the audio of an episode.
-VideoPlayer: Plays the audio of an episode and displays ASCII art loaded from a file.
+   Functionality: Defines how episodes are played.
+   AudioPlayer: Plays the audio of an episode.
+   VideoPlayer: Plays the audio of an episode and displays ASCII art loaded from a file.
 7. View
-Description: User interface component.
-Functionality: Handles user input and displays information about podcasts and episodes.
+   Description: User interface component.
+   Functionality: Handles user input and displays information about podcasts and episodes.
 8. Control
-Description: Manages interactions between Podify, PodcastFactory, and View.
-Functionality: Maintains the episode playlist and orchestrates the application flow.
+   Description: Manages interactions between Podify, PodcastFactory, and View.
+   Functionality: Maintains the episode playlist and orchestrates the application flow.
 9. TestControl
-Description: Testing framework for the Podify component.
-Functionality: Facilitates the testing of the application's functionality.
+   Description: Testing framework for the Podify component.
+   Functionality: Facilitates the testing of the application's functionality.
 10. Tester
-Description: Provides common testing functionalities.
-Functionality: Assists in the execution of tests for various components.
-Usage
-make
-./test or ./a4
-follow prompts
+    Description: Provides common testing functionalities.
+    Functionality: Assists in the execution of tests for various components.
+    Usage
+    make
+    ./test or ./a4
+    follow prompts
