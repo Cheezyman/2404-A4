@@ -1,28 +1,32 @@
 #include "Podify.h"
+    
+// constructor
+Podify::Podify() {}
 
-Podify::Podify() {
-    // Constructor implementation if needed
-}
-
+// destructor
 Podify::~Podify() {
-    for (int i = 0; i < podcasts.getSize(); ++i) {
-        delete podcasts[i];  // Ensure your Array class supports this operation
+    for(int i = 0; i < podcasts.getSize(); i++){
+        delete podcasts[i];
     }
 }
 
 void Podify::addPodcast(Podcast* podcast) {
-    if (podcast) {
-        podcasts.add(podcast);  // Use the add method instead of operator+=
+    if (podcasts.isFull()){
+        cerr << "Not enough space for new Podcasts. Podcast not added!"<<endl;
+        return;
     }
+    podcasts.add(podcast);  // Use the add method instead of operator+=     
 }
+
 
 void Podify::addEpisode(Episode* episode, const std::string& podcastTitle) {
     for (int i = 0; i < podcasts.getSize(); ++i) {
         if (podcasts[i]->equals(podcastTitle)) {
             podcasts[i]->add(episode);
-            break;
+            return;
         }
     }
+    cerr << "Podcast not found. Episode not added!" << endl;
 }
 
 const Array<Podcast*>& Podify::getPodcasts() const {
@@ -33,7 +37,9 @@ Podcast* Podify::getPodcast(int index) const {
     if (index >= 0 && index < podcasts.getSize()) {
         return podcasts[index];
     }
-    return nullptr; // or throw an exception
+    cerr << "Index out of bounds. Podcast not found!" << endl;
+    exit(1);
+    return nullptr;                                                                                                                                                                                                                                            
 }
 
 Podcast* Podify::getPodcast(const std::string& title) const {
@@ -42,7 +48,9 @@ Podcast* Podify::getPodcast(const std::string& title) const {
             return podcasts[i];
         }
     }
-    return nullptr; // or throw an exception
+    cerr << "Podcast not found!" << endl;
+    exit(1);
+    return nullptr;                                                                                                                                                                                                                                              
 }
 
 void Podify::getEpisodes(const Search& searchCriteria, Array<Episode*>& outEpisodes) {
@@ -51,8 +59,9 @@ void Podify::getEpisodes(const Search& searchCriteria, Array<Episode*>& outEpiso
         for (int j = 0; j < podcast->getSize(); ++j) {
             Episode* episode = podcast->get(j);
             if (searchCriteria.matches(episode)) {
-                outEpisodes.add(episode);  // Use the add method instead of operator+=
+                outEpisodes.add(episode);  // Use the add method instead of operator+=                                                                                                                                                                                                    
             }
         }
     }
 }
+

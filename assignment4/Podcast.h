@@ -5,11 +5,12 @@
 #include <string>
 #include <iostream>
 #include "Episode.h" // Include the Episode header
+#include "Array.h" 
 
 class Podcast
 {
 private:
-    std::vector<Episode *> episodes; // Dynamic array of episode pointers
+    Array<Episode*> episodes;
     std::string title;
     std::string host;
 

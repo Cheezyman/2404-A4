@@ -8,10 +8,19 @@ class PodcastPlayer
 {
 public:
     // Pure virtual function to play an episode
-    virtual void play(const Episode &episode, std::ostream &os) = 0;
-
-    // Virtual destructor for safe polymorphic use
-    virtual ~PodcastPlayer() {}
+    virtual void play(const Episode &episode, std::ostream &os) const = 0;
 };
 
-#endif // PODCASTPLAYER_H
+class AudioPlayer : public virtual PodcastPlayer
+{
+public:
+    void play(const Episode &episode, std::ostream &ost) const override;
+};
+
+class VideoPlayer : public AudioPlayer
+{
+public:
+    void play(const Episode &episode, std::ostream &ost) const override;
+};
+
+#endif

@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include "Search.h"
+#include <fstream>
 
 /*
 * This is the version of TestControl that runs on the server. The differences are as follows:

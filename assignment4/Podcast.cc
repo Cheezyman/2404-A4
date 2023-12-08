@@ -1,14 +1,15 @@
 #include "Podcast.h"
 #include <iostream>
+#include "Array.h"
 
 Podcast::Podcast(const std::string &title, const std::string &host)
     : title(title), host(host) {}
 
 Podcast::~Podcast()
 {
-    for (auto &episode : episodes)
+   for(int i = 0; i < episodes.getSize(); i++)
     {
-        delete episode;
+         delete episodes[i];
     }
 }
 
@@ -19,7 +20,7 @@ bool Podcast::equals(const std::string &title) const
 
 Episode *Podcast::get(int index) const
 {
-    if (index < 0 || index >= episodes.size())
+    if (index < 0 || index >= episodes.getSize())
     {
         std::cerr << "Index out of bounds" << std::endl;
         return nullptr;
@@ -29,7 +30,7 @@ Episode *Podcast::get(int index) const
 
 int Podcast::getSize() const
 {
-    return episodes.size();
+    return episodes.getSize();
 }
 
 void Podcast::print(std::ostream &out) const
@@ -40,15 +41,20 @@ void Podcast::print(std::ostream &out) const
 void Podcast::printWithEpisodes(std::ostream &out) const
 {
     print(out);
-    for (const auto &episode : episodes)
+    for(int i = 0; i < episodes.getSize(); i++)
     {
-        out << *episode << std::endl;
+        out << episodes[i]->getEpisodeTitle() << std::endl;
     }
 }
 
 void Podcast::add(Episode *episode)
 {
-    episodes.push_back(episode);
+    if(episodes.isFull())
+    {
+        std::cerr << "Podcast is full" << std::endl;
+        return;
+    }
+    episodes.add(episode);
 }
 
 std::ostream &operator<<(std::ostream &out, const Podcast &podcast)

@@ -7,45 +7,44 @@ a4: $(objects)
 	g++ -o a4 $(objects)
 
 main.o: main.cc Array.h
-	g++ -c main.cc 
+	g++ -g -c main.cc 
 
 test: $(testobjects)
 	g++ -o test $(testobjects)
 
 test.o: test.cc Array.h
-	g++ -c test.cc
+	g++ -g -c test.cc
 
 Tester.o: Tester.cc Tester.h
-	g++ -c Tester.cc
+	g++ -g -c Tester.cc
 
 TestControl.o: TestControl.cc TestControl.h
-	g++ -c TestControl.cc
+	g++ -g -c TestControl.cc
 
 View.o: View.h View.cc Array.h
-	g++ -c View.cc
+	g++ -g -c View.cc
 
 Controller.o: Controller.h Controller.cc Array.h
-	g++ -c Controller.cc
-
+	g++ -g -c Controller.cc
 
 Podify.o: Podify.h Podify.cc Array.h
-	g++ -c Podify.cc
-
+	g++ -g -c Podify.cc
 
 Podcast.o: Podcast.cc Podcast.h Array.h
-	g++ -c Podcast.cc
+	g++ -g -c Podcast.cc
 
 Episode.o: Episode.cc Episode.h
-	g++ -c Episode.cc
+	g++ -g -c Episode.cc
 	
 PodcastPlayer.o: PodcastPlayer.cc PodcastPlayer.h
-	g++ -c PodcastPlayer.cc
+	g++ -g -c PodcastPlayer.cc
 	
 PodcastFactory.o: PodcastFactory.cc PodcastFactory.h
-	g++ -c PodcastFactory.cc
+	g++ -g -c PodcastFactory.cc
 
 Search.o: Search.cc Search.h
-	g++ -c Search.cc
+	g++ -g -c Search.cc
+
 
 clean:
 	rm -f a4 *.o	
